@@ -6,7 +6,7 @@ An NLP tool that performs Negation resolution on sentences. It takes as input a 
 
 1. Download and extract [CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download). 
 2. Install requirements.txt:
-	```shell
+	```
 	pip install -r requirements.txt
 	```
 3. Edit settings.json. Make sure you keep the leading slashes in the directory names.
