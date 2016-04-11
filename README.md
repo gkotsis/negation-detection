@@ -11,7 +11,6 @@ An NLP tool that performs Negation resolution on sentences. It takes as input a 
 ```shell
 pip install -r requirements.txt
 ```
-
 3. Edit settings.json. Make sure you keep the leading slashes in the directory names.
 
 ##Example
