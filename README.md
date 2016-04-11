@@ -24,4 +24,4 @@ negation.predict(sentence, 'suicide')
 ```
 
 ## Reference
-George Gkotsis, Sumithra Velupillai, Anika Oellrich, Harry Dean, Maria Liakata and Rina Dutta. Don't Let Notes Be Misunderstood: A Negation Detection Method for Assessing Risk of Suicide in Mental Health Records, Computational Linguistics and Clinical Psychology. 2016
+George Gkotsis, Sumithra Velupillai, Anika Oellrich, Harry Dean, Maria Liakata and Rina Dutta. Don't Let Notes Be Misunderstood: A Negation Detection Method for Assessing Risk of Suicide in Mental Health Records, Workshop on Computational Linguistics and Clinical Psychology, NAACL 2016.
