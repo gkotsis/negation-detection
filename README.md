@@ -4,19 +4,18 @@ An NLP tool that performs negation resolution on a sentence level. It takes as i
 
 ## Installation
 
-1. Download and extract [CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download). 
-2. Install [stanford_corenlp_pywrapper](https://github.com/brendano/stanford_corenlp_pywrapper)
-3. Install through ```requirements.txt```:
+1. git clone https://github.com/gkotsis/negation-detection
+2. Download and extract [CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download). 
+3. Install [stanford_corenlp_pywrapper](https://github.com/brendano/stanford_corenlp_pywrapper)
+4. Install through ```requirements.txt```:
 	```
+	cd negation-detection
 	pip install -r requirements.txt
 	```
-4. Edit ```settings.json```. Make sure you keep the leading slashes in the directory names.
+5. Edit ```settings.json```. Make sure you keep the leading slashes in the directory names.
 
 ##Example
 
-```bash
-cd negation-detection
-```
 ```python
 import negation_detection
 sentence = "The patient is suicidal"
