@@ -4,7 +4,7 @@ An NLP tool that performs negation resolution on a sentence level. It takes as i
 
 ## Installation
 
-1. git clone https://github.com/gkotsis/negation-detection
+1. ```git clone https://github.com/gkotsis/negation-detection```
 2. Download and extract [CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download). 
 3. Install [stanford_corenlp_pywrapper](https://github.com/brendano/stanford_corenlp_pywrapper)
 4. Install through ```requirements.txt```:
