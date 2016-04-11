@@ -14,6 +14,10 @@ An NLP tool that performs Negation resolution on sentences. It takes as input a 
 
 ##Example
 
+```bash
+cd negation-detection
+```
+
 ```python
 import negation_detection
 sentence = "The patient is suicidal"
