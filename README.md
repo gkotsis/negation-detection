@@ -1,6 +1,6 @@
 # Negation Resolution
 
-An NLP tool that performs Negation resolution on sentences. It takes as input a sentence and a target-keyword. It returns `True` for affirmed keywords, `False` for negated and `None` for keywords not found.
+An NLP tool that performs negation resolution on a sentence level. It takes as input a sentence and a target-keyword. It returns `True` for affirmed keywords, `False` for negated and `None` for keywords not found. The tool makes use of Stanford's CoreNLP constituency trees.
 
 ## Installation
 
