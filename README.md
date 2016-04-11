@@ -19,5 +19,3 @@ import negation
 sentence = "The patient is suicidal"
 negation.predict(sentence, 'suicide')
 ```
-
-
