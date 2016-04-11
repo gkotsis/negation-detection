@@ -5,11 +5,12 @@ An NLP tool that performs Negation resolution on sentences. It takes as input a 
 ## Installation
 
 1. Download and extract [CoreNLP](http://stanfordnlp.github.io/CoreNLP/#download). 
-2. Install requirements.txt:
+2. Install [stanford_corenlp_pywrapper](https://github.com/brendano/stanford_corenlp_pywrapper)
+3. Install requirements.txt:
 	```
 	pip install -r requirements.txt
 	```
-3. Edit settings.json. Make sure you keep the leading slashes in the directory names.
+4. Edit settings.json. Make sure you keep the leading slashes in the directory names.
 
 ##Example
 
