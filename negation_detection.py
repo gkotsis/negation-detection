@@ -33,9 +33,10 @@ def _lemma_(token):
 	from nltk.stem import WordNetLemmatizer
 	wordnet_lemmatizer = WordNetLemmatizer()
 	p = get_wordnet_pos(token.pos()[0][1])
-	if p=='':
+	if p!=wordnet.VERB:
 		return _stem_(token[0])
-	rs = wordnet_lemmatizer.lemmatize(token[0], pos=get_wordnet_pos(token.pos()[0][1]))
+	# print token, get_wordnet_pos(token.pos()[0][1])
+	rs = wordnet_lemmatizer.lemmatize(token[0], pos=p)
 	return rs
 
 def isNegationWord(token):
@@ -179,7 +180,7 @@ def preprocess(sentence, keyword):
 def findSentencePTreeToken(sentence, keyword):
 	import nltk
 	from nltk.tree import ParentedTree
-	stemmed = _stem_(keyword)
+	stemmed = _lemma_(keyword)
 
 	tmp = proc.parse_doc(sentence)
 	i = 0
@@ -386,7 +387,6 @@ def predictExpression(sentence, expression):
 	words = findSentencePTreeToken(expression, word)
 	word = words[0]
 	words = getLeaves(word.root())
-
 	tokens = findSentencePTreeToken(sentence, word[0])
 	token = None
 	for token in tokens:
@@ -394,6 +394,7 @@ def predictExpression(sentence, expression):
 		i = 0
 		for word in words:
 			if _lemma_(word)!=_lemma_(token):
+				# print _lemma_(word), _lemma_(token)
 				token = None
 				break
 			next = getRightSibling(token)
@@ -406,6 +407,7 @@ def predictExpression(sentence, expression):
 		if token is not None:
 			if _lemma_(token)==_lemma_(word):
 				break
+
 	if token is None:
 		return None
 	if _lemma_(token)!=_lemma_(word):
