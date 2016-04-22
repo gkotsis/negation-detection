@@ -412,7 +412,7 @@ def predictExpression(sentence, expression):
 		return None
 	if _lemma_(token)!=_lemma_(word):
 		return None
-	return not isNegated(token, words[0][0])
+	return not isNegated(token, word[0])
 
 
 def predict(sentence, keyword):
