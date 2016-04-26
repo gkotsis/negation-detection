@@ -35,14 +35,13 @@ def _lemma_(token):
 	p = get_wordnet_pos(token.pos()[0][1])
 	if p!=wordnet.VERB:
 		return _stem_(token[0])
-	# print token, get_wordnet_pos(token.pos()[0][1])
 	rs = wordnet_lemmatizer.lemmatize(token[0], pos=p)
 	return rs
 
 def isNegationWord(token):
 	import nltk
 	if not isinstance(token, nltk.tree.ParentedTree):
-		print "wtf?", token
+		print "something went terribly wrong with", token
 		return None
 	if (token.label().startswith("V")) or (token.label().startswith("J")):
 		word = token[0]
@@ -85,7 +84,6 @@ def breakWithOutWhiteSpace(sentence):
 
 	start = 0
 	while True:
-		# print "koukou"
 		start = places[i]
 		if start>0:
 			start +=1
@@ -172,8 +170,10 @@ def preprocess(sentence, keyword):
 			newSentences.append(sentence)
 
 	sentences = newSentences
+	return " ".join(sentences)
 	if sentences:
 		sentence = sentences[0]
+
 
 	return sentence
 
@@ -190,7 +190,7 @@ def findSentencePTreeToken(sentence, keyword):
 		p = tmp['sentences'][i]['parse']
 		ptree = ParentedTree.fromstring(p)
 
-		rs = []
+		# rs = []
 		for i in range(0, len(ptree.leaves())):
 			tree_position = ptree.leaf_treeposition(i)
 
@@ -199,8 +199,8 @@ def findSentencePTreeToken(sentence, keyword):
 			if _stem_(node)==stemmed:
 				tree_position = tree_position[0:len(tree_position)-1]
 				rs.append(ptree[tree_position])
-		if len(rs)>0:
-			return rs
+		# if len(rs)>0:
+		# 	return rs
 	return rs
 
 def getLeaves(ptree):
@@ -388,13 +388,10 @@ def predictExpression(sentence, expression):
 	word = words[0]
 	words = getLeaves(word.root())
 	tokens = findSentencePTreeToken(sentence, word[0])
-	token = None
+	rs = []
 	for token in tokens:
-
-		i = 0
 		for word in words:
 			if _lemma_(word)!=_lemma_(token):
-				# print _lemma_(word), _lemma_(token)
 				token = None
 				break
 			next = getRightSibling(token)
@@ -406,39 +403,53 @@ def predictExpression(sentence, expression):
 
 		if token is not None:
 			if _lemma_(token)==_lemma_(word):
-				break
+				if word==words[-1]:
+					rs.append(token)
 
-	if token is None:
+	tokens = rs
+	if len(tokens)==0:
 		return None
-	if _lemma_(token)!=_lemma_(word):
-		return None
-	return not isNegated(token, word[0])
+	rs = []
+	for token in tokens:
+		tmp = not isNegated(token, word[-1])
+		rs.append(tmp)
+
+	rs = sum(rs)/float(len(rs))
+	return int(round(rs))
 
 
 def predict(sentence, keyword):
 	sentence = preprocess(sentence, keyword)
 	tokens = findSentencePTreeToken(sentence, keyword)
+	# print tokens
 	if len(tokens)==0:
 		return None
 
 	token = tokens[0]
-	root = token.root()
-	sentence = ""
-	for leaf in root.leaves():
-		if leaf!=",":
-			if len(sentence)==0:
-				sentence = leaf
+	rs = []
+
+	for token in tokens:
+		root = token.root()
+		sentence = ""
+		for leaf in root.leaves():
+			if leaf!=",":
+				if len(sentence)==0:
+					sentence = leaf
+				else:
+					sentence = sentence + " " + leaf
 			else:
-				sentence = sentence + " " + leaf
-		else:
-			sentence = sentence + leaf
+				sentence = sentence + leaf
 
-	tokens = findSentencePTreeToken(sentence, keyword)
-	if len(tokens)==0:
-		return None
+		tokens = findSentencePTreeToken(sentence, keyword)
+		if len(tokens)==0:
+			return None
 
-	token = tokens[0]
+		for token in tokens:
+			tmp = isNegated(token, keyword)
+			tmp = not(tmp)
+			rs.append(tmp)
 
-	rs = isNegated(token, keyword)
-	rs = not(rs)
+	# print rs
+	rs = sum(rs)/float(len(rs))
+	return int(round(rs))
 	return rs
