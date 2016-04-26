@@ -415,7 +415,12 @@ def predictExpression(sentence, expression):
 		rs.append(tmp)
 
 	rs = sum(rs)/float(len(rs))
-	return int(round(rs))
+	rs = int(round(rs))
+	if rs ==1:
+		return True
+	if rs==0:
+		return False
+	return rs
 
 
 def predict(sentence, keyword):
@@ -451,5 +456,9 @@ def predict(sentence, keyword):
 
 	# print rs
 	rs = sum(rs)/float(len(rs))
-	return int(round(rs))
+	rs = int(round(rs))
+	if rs==1:
+		return True
+	if rs==0:
+		return False
 	return rs
