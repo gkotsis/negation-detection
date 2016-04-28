@@ -368,7 +368,21 @@ def isNegated(token, keyword):
 		return True
 	return False
 
-def predictExpression(sentence, expression):
+def processReturnResult(marks, asBoolean):
+	if len(marks)==0:
+		return None
+	if asBoolean:
+		rs = sum(marks)/float(len(marks))
+		rs = int(round(rs))
+		if rs==1:
+			return True
+		if rs==0:
+			return False
+		return None
+	else:
+		return sum(marks)
+
+def predictExpression(sentence, expression, asBoolean=True):
 	def getRightSibling(node):
 		tokens = getLeaves(node.root())
 		i = 0
@@ -414,16 +428,9 @@ def predictExpression(sentence, expression):
 		tmp = not isNegated(token, word[-1])
 		rs.append(tmp)
 
-	rs = sum(rs)/float(len(rs))
-	rs = int(round(rs))
-	if rs ==1:
-		return True
-	if rs==0:
-		return False
-	return rs
+	return processReturnResult(rs, asBoolean)
 
-
-def predict(sentence, keyword):
+def predict(sentence, keyword, asBoolean=True):
 	sentence = preprocess(sentence, keyword)
 	tokens = findSentencePTreeToken(sentence, keyword)
 	# print tokens
@@ -454,11 +461,4 @@ def predict(sentence, keyword):
 			tmp = not(tmp)
 			rs.append(tmp)
 
-	# print rs
-	rs = sum(rs)/float(len(rs))
-	rs = int(round(rs))
-	if rs==1:
-		return True
-	if rs==0:
-		return False
-	return rs
+	return processReturnResult(rs, asBoolean)
