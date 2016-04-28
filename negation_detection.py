@@ -380,7 +380,7 @@ def processReturnResult(marks, asBoolean):
 			return False
 		return None
 	else:
-		return sum(marks)
+		return marks
 
 def predictExpression(sentence, expression, asBoolean=True):
 	def getRightSibling(node):
