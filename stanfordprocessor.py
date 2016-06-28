@@ -6,6 +6,7 @@ import json
 import tempfile
 
 curdir = os.path.dirname(os.path.realpath(__file__)) + "/"
+USECACHE = True
 
 try:
 	f = open(curdir + 'settings.json')
@@ -15,6 +16,12 @@ try:
 		CACHEDIR = data['CACHEDIR']
 	else:
 		CACHEDIR = tempfile.gettempdir() + "/"
+	if 'USECACHE' in data.keys():
+		USECACHE = data['USECACHE']
+		if USECACHE.lower()=="false":
+			USECACHE = False
+		else:
+			USECACHE = True
 	CORENLP_JARS_DIR = data['corenlp_jars']
 except Exception:
 	print "CRITICAL ERROR: NO CORENLP JARS DIR FOUND IN SETTINGS.\nEDIT *settings.json*"
@@ -40,12 +47,15 @@ def getProcessor():
 
 
 		def parse_doc(self, st):
-			tmp = self.fetchFromCache(st)
+			tmp = None
+			if USECACHE:
+				tmp = self.fetchFromCache(st)
 			if tmp is None:
 				rs = super(Processor, self).parse_doc(st)
 				fname = hashlib.sha224(st.encode('utf-8')).hexdigest()
 				import pickle
-				pickle.dump(rs, open(CACHEDIR + fname + ".pickle", "w"))
+				if USECACHE:
+					pickle.dump(rs, open(CACHEDIR + fname + ".pickle", "w"))
 				return rs
 			else:
 				return tmp

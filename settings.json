@@ -1,4 +1,5 @@
 {
-	"CACHEDIR": "/PATH/TO/CACHEDIR/ELSE/REMOVE/LINE/TO/USE/OS/TMP/DIR/",
-	"corenlp_jars": "/PATH/TO/CORENLP/JARS/"
+	"CACHEDIR": "/home/gkotsis/projects/ehostit/cache-2014-08-27/",
+	"corenlp_jars": "/home/gkotsis/projects/corenlp/stanford-corenlp-python/stanford-corenlp-full-2014-08-27/",
+	"USECACHE": "False"
 }
