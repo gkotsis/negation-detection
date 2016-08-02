@@ -28,6 +28,15 @@ except Exception:
 	raise ImportError
 
 
+def emptyCache():
+	import os
+	
+	filelist = [ f for f in os.listdir(CACHEDIR) ]
+	print "removed", len(filelist), "files"
+	for f in filelist:
+		os.remove(CACHEDIR + f)
+	return
+
 def getProcessor():
 	from stanford_corenlp_pywrapper import CoreNLP
 	class Processor(CoreNLP, object):

@@ -424,6 +424,7 @@ def predictExpression(sentence, expression, asBoolean=True):
 	if len(tokens)==0:
 		return None
 	rs = []
+	print tokens
 	for token in tokens:
 		tmp = not isNegated(token, word[-1])
 		rs.append(tmp)
