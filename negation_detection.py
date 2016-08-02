@@ -394,8 +394,8 @@ def predictExpression(sentence, expression, asBoolean=True):
 			return tokens[i+1]
 		return None
 	words = expression.split(" ")
-	if len(words)<=1:
-		return predict(sentence, expression)
+	# if len(words)<=1:
+	# 	return predict(sentence, expression)
 
 	word = words[0]
 	words = findSentencePTreeToken(expression, word)
@@ -424,7 +424,7 @@ def predictExpression(sentence, expression, asBoolean=True):
 	if len(tokens)==0:
 		return None
 	rs = []
-	print tokens
+	# print tokens
 	for token in tokens:
 		tmp = not isNegated(token, word[-1])
 		rs.append(tmp)
@@ -463,3 +463,52 @@ def predict(sentence, keyword, asBoolean=True):
 			rs.append(tmp)
 
 	return processReturnResult(rs, asBoolean)
+
+
+
+
+EXPRESSIONS = [ 'suicide','kill herself', 'kill himself', 'kill themselves', 'kill myself'
+				'take his own life', 'take her own life', 'take their own life',
+				'end his own life', 'end her own life', 'end their own life', 'want to die', 'were dead']
+
+# cheating: 'kill myself', 'want to die', 'were dead' and positive expression
+POSITIVE_EXPRESSIONS = ['want to live']
+
+def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=None, includeMarks=True):
+	# import negation_detection as detection
+	# reload(detection)
+	foundFalse = False
+	from collections import Counter
+	marks = {}
+	if positive_expressions is not None:
+		for expression in positive_expressions:
+			tmp = predictExpression(cnt, expression, asBoolean=False)
+			# print tmp, expression
+			marks[expression] = Counter(tmp)
+			# if tmp is True:
+			# 	return tmp
+			# if tmp is False:
+			# 	foundFalse = True
+
+	if negative_expressions is not None:
+		for expression in negative_expressions:
+			tmp = predictExpression(cnt, expression, asBoolean=False)
+			# print tmp, cnt
+			marks[expression] = Counter(tmp)
+			# if tmp is False:
+			# 	return True
+	
+	flat = []
+	for k in marks.keys():
+		if len(marks[k])==0:
+			continue
+		for v in marks[k].keys():
+			flat.extend([v] * marks[k][v])
+	b = processReturnResult(flat, True)
+	if includeMarks:
+		return b, marks
+	return b
+	# detection.emptyCache()
+	if foundFalse:
+		return False
+	return None
