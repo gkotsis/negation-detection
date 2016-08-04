@@ -474,9 +474,10 @@ EXPRESSIONS = [ 'suicide','kill herself', 'kill himself', 'kill themselves', 'ki
 # cheating: 'kill myself', 'want to die', 'were dead' and positive expression
 POSITIVE_EXPRESSIONS = ['want to live']
 
-def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=None, includeMarks=True):
+def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=POSITIVE_EXPRESSIONS, includeMarks=True):
 	# import negation_detection as detection
 	# reload(detection)
+	import pandas as pd
 	foundFalse = False
 	from collections import Counter
 	marks = {}
@@ -493,7 +494,7 @@ def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=N
 	if negative_expressions is not None:
 		for expression in negative_expressions:
 			tmp = predictExpression(cnt, expression, asBoolean=False)
-			# print tmp, cnt
+			tmp = [not item for item in tmp]
 			marks[expression] = Counter(tmp)
 			# if tmp is False:
 			# 	return True
@@ -506,5 +507,5 @@ def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=N
 			flat.extend([v] * marks[k][v])
 	b = processReturnResult(flat, True)
 	if includeMarks:
-		return b, marks
-	return b
+		return pd.Series({'prediction':b, 'marks': marks})
+	return pd.Series({'prediction':b})
