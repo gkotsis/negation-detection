@@ -508,7 +508,3 @@ def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=N
 	if includeMarks:
 		return b, marks
 	return b
-	# detection.emptyCache()
-	if foundFalse:
-		return False
-	return None
