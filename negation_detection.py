@@ -474,7 +474,7 @@ EXPRESSIONS = [ 'suicide','kill herself', 'kill himself', 'kill themselves', 'ki
 # cheating: 'kill myself', 'want to die', 'were dead' and positive expression
 POSITIVE_EXPRESSIONS = ['want to live']
 
-def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=POSITIVE_EXPRESSIONS, includeMarks=True):
+def assessDocument(cnt, positive_expressions=EXPRESSIONS, negative_expressions=None, includeMarks=True):
 	# import negation_detection as detection
 	# reload(detection)
 	import pandas as pd
