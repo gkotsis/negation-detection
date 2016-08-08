@@ -60,7 +60,10 @@ def getProcessor():
 			if USECACHE:
 				tmp = self.fetchFromCache(st)
 			if tmp is None:
-				rs = super(Processor, self).parse_doc(st)
+				try:
+					rs = super(Processor, self).parse_doc(st)
+				except:
+					return None
 				fname = hashlib.sha224(st.encode('utf-8')).hexdigest()
 				import pickle
 				if USECACHE:
