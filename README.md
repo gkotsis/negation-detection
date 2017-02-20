@@ -19,7 +19,7 @@ An NLP tool that performs negation resolution on a sentence level. It takes as i
 ```python
 import negation_detection
 sentence = "ZZZZ reported no recent periods of low mood, discussed how in the past she made many suicide attempts"
-negation.predict(sentence, 'suicide')
+negation_detection.predict(sentence, 'suicide')
 ```
 
 ## Reference
